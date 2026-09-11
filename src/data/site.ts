@@ -26,8 +26,6 @@ export const siteConfig = {
   intro:
     'A student in Computer Science and Technology exploring how intelligent systems can perceive, learn, and act in the physical world.',
   introZh: '计算机科学与技术专业学生，正在探索智能系统如何在物理世界中感知、学习与行动。',
-  location: '[Location to be added]',
-  locationZh: '[所在地待补充]',
   links: [
     {
       key: 'github',

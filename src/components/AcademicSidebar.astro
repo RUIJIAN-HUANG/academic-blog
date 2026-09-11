@@ -1,5 +1,4 @@
 ---
-import Icon from './Icon.astro';
 import { siteConfig, withBase } from '../data/site';
 
 const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
@@ -19,7 +18,6 @@ const isActive = (path: string) => {
   return currentPath === path || currentPath.startsWith(`${path}/`);
 };
 
-const availableLinks = siteConfig.links.filter((link) => link.href);
 ---
 
 <aside class="academic-sidebar" aria-label="Profile and site navigation">
@@ -40,34 +38,6 @@ const availableLinks = siteConfig.links.filter((link) => link.href);
   <a class="sidebar-follow" href={withBase('/contact')}>
     <span class="lang-en">Contact</span><span class="lang-zh" lang="zh">联系我</span>
   </a>
-
-  <ul class="profile-links">
-    <li class="profile-link-item">
-      <span class="profile-link-icon" aria-hidden="true">⌖</span>
-      <span class="lang-en">{siteConfig.location}</span>
-      <span class="lang-zh" lang="zh">{siteConfig.locationZh}</span>
-    </li>
-    {availableLinks.map((link) => (
-      <li class="profile-link-item">
-        <a href={link.href!} target="_blank" rel="noreferrer">
-          <span class="profile-link-icon" aria-hidden="true">
-            {link.key === 'github' && <Icon name="github" size={14} />}
-            {link.key === 'email' && <Icon name="mail" size={14} />}
-            {link.key === 'scholar' && <Icon name="book" size={14} />}
-            {link.key === 'orcid' && 'iD'}
-          </span>
-          <span class="lang-en">{link.label}</span>
-          <span class="lang-zh" lang="zh">{link.labelZh}</span>
-        </a>
-      </li>
-    ))}
-    <li class="profile-link-item">
-      <a href={withBase('/rss.xml')}>
-        <span class="profile-link-icon" aria-hidden="true">↗</span>
-        <span>RSS</span>
-      </a>
-    </li>
-  </ul>
 
   <nav class="sidebar-nav" aria-label="Site sections">
     {navItems.map((item) => (

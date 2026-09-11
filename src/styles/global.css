@@ -2343,42 +2343,6 @@ html[data-theme='dark'] .theme-dark-icon {
   color: var(--ink);
 }
 
-.profile-links {
-  display: grid;
-  gap: 0.45rem;
-  margin: 1.35rem 0 0;
-  padding: 1.15rem 0 0;
-  border-top: 1px solid var(--line);
-  list-style: none;
-}
-
-.profile-link-item,
-.profile-link-item a {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  min-width: 0;
-  color: var(--muted);
-  font-size: 0.78rem;
-  line-height: 1.45;
-}
-
-.profile-link-item a:hover,
-.profile-link-item a:focus-visible {
-  color: var(--accent-strong);
-  text-decoration: underline;
-  text-underline-offset: 0.16em;
-}
-
-.profile-link-icon {
-  display: inline-grid;
-  width: 1.05rem;
-  flex: 0 0 1.05rem;
-  place-items: center;
-  color: var(--faint);
-  font-size: 0.95rem;
-}
-
 .sidebar-nav {
   display: grid;
   gap: 0.15rem;
