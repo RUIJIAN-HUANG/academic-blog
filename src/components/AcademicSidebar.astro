@@ -1,50 +1,31 @@
 ---
+import Icon from './Icon.astro';
 import { siteConfig, withBase } from '../data/site';
 
-const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
-const navItems = [
-  { path: '/', label: 'Biography', labelZh: '个人简介' },
-  { path: '/about', label: 'About', labelZh: '关于我' },
-  { path: '/research', label: 'Research', labelZh: '研究兴趣' },
-  { path: '/blog', label: 'Notes', labelZh: '学习笔记' },
-  { path: '/projects', label: 'Projects', labelZh: '项目' },
-  { path: '/papers', label: 'Publications & reading', labelZh: '论文与阅读' },
-  { path: '/cv', label: 'CV', labelZh: '简历' },
-  { path: '/contact', label: 'Contact', labelZh: '联系方式' },
-];
-
-const isActive = (path: string) => {
-  if (path === '/') return currentPath === '/';
-  return currentPath === path || currentPath.startsWith(`${path}/`);
+const iconFor: Record<string, 'github' | 'mail' | 'scholar' | 'orcid' | 'wechat' | 'whatsapp'> = {
+  github: 'github',
+  email: 'mail',
+  scholar: 'scholar',
+  orcid: 'orcid',
+  wechat: 'wechat',
+  whatsapp: 'whatsapp',
 };
-
 ---
 
-<aside class="academic-sidebar" aria-label="Profile and site navigation">
-  <div class="profile-block">
-    <div class="profile-avatar">
-      <img src={withBase('/images/profile.jpg')} alt={`${siteConfig.name}（${siteConfig.nameZh}）`} loading="eager" decoding="async" />
-    </div>
-    <h2 class="profile-name">
-      {siteConfig.name}
-      <span class="profile-name-zh" lang="zh">（{siteConfig.nameZh}）</span>
-    </h2>
-    <p class="profile-affiliation">
-      <span class="lang-en">{siteConfig.institution}</span>
-      <span class="lang-zh" lang="zh">{siteConfig.institutionZh}</span>
-    </p>
-  </div>
-
-  <a class="sidebar-follow" href={withBase('/contact')}>
-    <span class="lang-en">Contact</span><span class="lang-zh" lang="zh">联系我</span>
+<aside class="profile-sidebar" aria-label="Personal profile">
+  <a class="profile-photo-link" href={withBase('/')} aria-label={`${siteConfig.name} — home`}>
+    <img class="profile-photo" src={withBase(siteConfig.profileImage)} alt={`${siteConfig.name} (${siteConfig.nameZh})`} width="210" height="210" loading="eager" decoding="async" />
   </a>
 
-  <nav class="sidebar-nav" aria-label="Site sections">
-    {navItems.map((item) => (
-      <a class:list={{ 'sidebar-nav-link': true, active: isActive(item.path) }} href={withBase(item.path)} aria-current={isActive(item.path) ? 'page' : undefined}>
-        <span class="lang-en">{item.label}</span>
-        <span class="lang-zh" lang="zh">{item.labelZh}</span>
+  <h2 class="profile-name">{siteConfig.name} <span>({siteConfig.nameZh})</span></h2>
+  <p class="profile-institution">{siteConfig.institution}</p>
+
+  <div class="profile-links">
+    <p class="profile-link-row"><Icon name="location" size={18} /><span>{siteConfig.location}</span></p>
+    {siteConfig.links.map((link) => (
+      <a class="profile-link-row profile-social-link" href={link.href} target="_blank" rel="noreferrer">
+        <Icon name={iconFor[link.key]} size={18} /><span>{link.label}</span>
       </a>
     ))}
-  </nav>
+  </div>
 </aside>

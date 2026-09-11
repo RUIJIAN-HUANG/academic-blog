@@ -1,132 +1,82 @@
-export type SiteLink = {
-  key: 'github' | 'email' | 'scholar' | 'orcid';
+export type SocialKey = 'github' | 'email' | 'scholar' | 'orcid' | 'wechat' | 'whatsapp';
+
+export interface SocialLink {
+  key: SocialKey;
   label: string;
-  labelZh: string;
-  href: string | null;
-  detail: string;
-  detailZh: string;
-};
+  href: string;
+}
+
+export interface EducationEntry {
+  institution: string;
+  dates: string;
+  program: string;
+  college: string;
+}
+
+export interface NewsEntry {
+  date: string;
+  text: string;
+  href?: string;
+}
+
+export interface AwardEntry {
+  title: string;
+  organization: string;
+  year: string;
+  href?: string;
+}
+
+export interface PublicationEntry {
+  title: string;
+  authors: string;
+  venue: string;
+  year: string;
+  href?: string;
+  pdf?: string;
+  code?: string;
+}
 
 export const siteConfig = {
   name: 'Ruijian Huang',
   nameZh: '黄睿健',
-  title: 'Ruijian Huang — Academic Notes',
+  brand: "Ruijian Huang's Personal Homepage",
+  title: 'Ruijian Huang — Personal Homepage',
   description:
-    'Academic homepage and technical notes by Ruijian Huang, a second-year Computer Science and Technology student interested in machine learning and embodied intelligence.',
-  descriptionZh: '黄睿健的学术主页与技术笔记，记录计算机科学与技术专业大二学生对机器学习与具身智能的探索。',
-  siteUrl: 'https://your-github-username.github.io/',
+    'Personal homepage of Ruijian Huang, a second-year undergraduate student at Shenzhen University interested in machine learning, edge AI systems, tiny machine learning, and embodied intelligence.',
+  siteUrl: 'https://ruijian-huang.github.io/academic-blog/',
   role: 'Second-year undergraduate student',
-  roleZh: '大二学生',
   institution: 'Shenzhen University',
-  institutionZh: '深圳大学',
+  college: 'College of Computer Science and Software Engineering',
   field: 'Computer Science and Technology',
-  fieldZh: '计算机科学与技术',
-  interest: 'Embodied Intelligence & Robot Learning',
-  interestZh: '具身智能与机器人学习',
-  researchSummary:
-    'machine learning, edge AI systems, tiny machine learning, and embodied intelligence',
-  researchSummaryZh: '机器学习、边缘 AI 系统、微型机器学习与具身智能',
-  intro:
-    'A second-year undergraduate student in Computer Science and Technology interested in machine learning, edge AI systems, tiny machine learning, and embodied intelligence.',
-  introZh: '计算机科学与技术专业大二学生，感兴趣的方向包括机器学习、边缘 AI 系统、微型机器学习与具身智能。',
-  links: [
-    {
-      key: 'github',
-      label: 'GitHub',
-      labelZh: 'GitHub',
-      href: null,
-      detail: 'GitHub username to be added',
-      detailZh: 'GitHub 用户名待补充',
-    },
-    {
-      key: 'email',
-      label: 'Email',
-      labelZh: '邮箱',
-      href: null,
-      detail: 'Email address to be added',
-      detailZh: '邮箱地址待补充',
-    },
-    {
-      key: 'scholar',
-      label: 'Google Scholar',
-      labelZh: 'Google Scholar',
-      href: null,
-      detail: 'Scholar profile to be added',
-      detailZh: 'Scholar 主页待补充',
-    },
-    {
-      key: 'orcid',
-      label: 'ORCID',
-      labelZh: 'ORCID',
-      href: null,
-      detail: 'ORCID iD to be added',
-      detailZh: 'ORCID iD 待补充',
-    },
-  ] satisfies SiteLink[],
+  enrollmentYear: 2025,
+  expectedGraduationYear: 2029,
+  location: 'Shenzhen, China',
+  biography:
+    'I’m a second-year undergraduate student from the College of Computer Science and Software Engineering, Shenzhen University. My research interests include machine learning, edge AI systems, tiny machine learning, and embodied intelligence.',
+  profileImage: '/images/profile.jpg',
+  cvHref: null as string | null,
+  links: [] as SocialLink[],
 } as const;
 
-export const researchTopics = [
-  {
-    number: '01',
-    title: 'Embodied Intelligence',
-    titleZh: '具身智能',
-    description:
-      'How an agent connects perception, reasoning, and action when it has to operate in a physical environment.',
-    descriptionZh: '关注智能体如何在物理环境中连接感知、推理与行动。',
-    tags: ['embodied-intelligence'],
-    accent: 'slate',
-  },
-  {
-    number: '02',
-    title: 'Robot Learning',
-    titleZh: '机器人学习',
-    description:
-      'A working space for studying policies, demonstrations, representations, and the practical details of learning from data.',
-    descriptionZh: '用于记录策略、示范、表征以及从数据中学习的实践问题。',
-    tags: ['robot-learning'],
-    accent: 'blue',
-  },
-  {
-    number: '03',
-    title: 'Perception → Decision → Control',
-    titleZh: '感知 → 决策 → 控制',
-    description:
-      'An editorial lens for organizing future notes across the pipeline from observations to actions; scope remains open.',
-    descriptionZh: '用于整理从观测到行动的未来笔记，具体研究范围仍待补充。',
-    tags: ['perception', 'control'],
-    accent: 'slate',
-  },
-  {
-    number: '04',
-    title: 'Reproducible Research Practice',
-    titleZh: '可复现研究实践',
-    description:
-      'A practical thread about recording environments, assumptions, metrics, failures, and evidence clearly.',
-    descriptionZh: '记录环境、假设、指标、失败原因与证据的实践主线。',
-    tags: ['reproducibility', 'research-methods'],
-    accent: 'amber',
-  },
+export const researchInterests = [
+  'Machine Learning',
+  'Edge AI Systems',
+  'Tiny Machine Learning',
+  'Embodied Intelligence',
 ] as const;
 
-export const blogCategories = [
-  { value: 'Algorithms & Data Structures', label: 'Algorithms & Data Structures', labelZh: '算法与数据结构' },
-  { value: 'AI Learning Notes', label: 'AI Learning Notes', labelZh: 'AI 学习笔记' },
-  { value: 'Paper Reading', label: 'Paper Reading', labelZh: '论文阅读' },
-  { value: 'Experiment Review', label: 'Experiment Review', labelZh: '实验复盘' },
-  { value: 'Programming Projects', label: 'Programming Projects', labelZh: '编程项目' },
-  { value: 'Research Methods', label: 'Research Methods', labelZh: '研究方法' },
-  { value: 'Learning Reflections', label: 'Learning Reflections', labelZh: '学习反思' },
-  { value: 'Academic Viewpoints', label: 'Academic Viewpoints', labelZh: '学术观点' },
-] as const;
+export const education: EducationEntry[] = [
+  {
+    institution: siteConfig.institution,
+    dates: `${siteConfig.enrollmentYear} – ${siteConfig.expectedGraduationYear}`,
+    program: `Undergraduate studies in ${siteConfig.field}`,
+    college: siteConfig.college,
+  },
+];
 
-export const cvPlaceholders = {
-  education: '[Institution, degree, and dates to be added]',
-  educationZh: '[学校、学位与时间待补充]',
-  research: '[Research group, advisor, role, and dates to be added]',
-  researchZh: '[研究组、导师、角色与时间待补充]',
-  skills: ['[Programming language]', '[ML framework]', '[Research tool]'],
-  skillsZh: ['[编程语言]', '[机器学习框架]', '[研究工具]'],
-} as const;
+export const news: NewsEntry[] = [];
+export const awards: AwardEntry[] = [];
+export const publications: PublicationEntry[] = [];
 
 export function withBase(path: string) {
   const base = import.meta.env.BASE_URL || '/';

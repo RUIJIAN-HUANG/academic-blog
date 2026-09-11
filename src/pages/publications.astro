@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { publications } from '../data/site';
+---
+
+<BaseLayout title="Publications" description="Publications by Ruijian Huang.">
+  <article class="publications-page">
+    <section class="content-section">
+      <h1>Publications</h1>
+      {publications.length > 0 ? (
+        <ol class="publication-list">
+          {publications.map((publication) => (
+            <li>
+              <p class="publication-title">
+                {publication.href ? <a href={publication.href} target="_blank" rel="noreferrer">{publication.title}</a> : publication.title}
+              </p>
+              <p class="publication-meta">{publication.authors}. {publication.venue}, {publication.year}.</p>
+              <div class="publication-links">
+                {publication.pdf && <a href={publication.pdf} target="_blank" rel="noreferrer">PDF</a>}
+                {publication.code && <a href={publication.code} target="_blank" rel="noreferrer">Code</a>}
+              </div>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p class="empty-state">No publications have been added yet.</p>
+      )}
+    </section>
+  </article>
+</BaseLayout>

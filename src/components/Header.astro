@@ -1,48 +1,18 @@
 ---
-import Icon from './Icon.astro';
 import { siteConfig, withBase } from '../data/site';
 
 const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
-const mastheadItems = [
-  { path: '/papers', label: 'Publications', labelZh: '论文阅读' },
-  { path: '/blog', label: 'Notes', labelZh: '学习笔记' },
-];
-
-const isActive = (path: string) => {
-  if (path === '/') return currentPath === '/';
-  return currentPath === path || currentPath.startsWith(`${path}/`);
-};
+const publicationsPath = '/publications';
+const isPublicationsPage = currentPath === publicationsPath || currentPath.startsWith(`${publicationsPath}/`);
 ---
 
-<header class="site-header" data-pagefind-ignore>
-  <div class="container-shell header-inner">
-    <a class="brand" href={withBase('/')} aria-label={`${siteConfig.name} — home`}>
-      <span class="brand-name">{siteConfig.name}<span class="brand-name-zh" lang="zh">（{siteConfig.nameZh}）</span></span>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="site-brand" href={withBase('/')} aria-label={`${siteConfig.name} — home`}>
+      {siteConfig.brand}
     </a>
-
-    <button class="mobile-menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="primary-nav">
-      <span class="sr-only">Open navigation</span>
-      <Icon name="menu" size={20} />
-    </button>
-
-    <nav id="primary-nav" class="site-nav" aria-label="Primary navigation">
-      {mastheadItems.map((item) => (
-        <a class:list={{ 'nav-link': true, active: isActive(item.path) }} href={withBase(item.path)} aria-current={isActive(item.path) ? 'page' : undefined}>
-          <span class="lang-en">{item.label}</span>
-          <span class="lang-zh" lang="zh">{item.labelZh}</span>
-        </a>
-      ))}
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class:list={{ active: isPublicationsPage }} href={withBase(publicationsPath)} aria-current={isPublicationsPage ? 'page' : undefined}>Publications</a>
     </nav>
-
-    <div class="header-actions">
-      <button class="icon-button" type="button" data-locale-toggle aria-label="Switch to Chinese">
-        <span class="locale-en">中</span>
-        <span class="locale-zh" lang="zh">EN</span>
-      </button>
-      <button class="icon-button" type="button" data-theme-toggle aria-label="Switch to dark mode">
-        <span class="theme-light-icon"><Icon name="moon" size={17} /></span>
-        <span class="theme-dark-icon"><Icon name="sun" size={17} /></span>
-      </button>
-    </div>
   </div>
 </header>

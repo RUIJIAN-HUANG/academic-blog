@@ -1,99 +1,75 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
-import { getPosts, getProjects, getReadingTime, slugFor } from '../lib/content';
-import { cvPlaceholders, researchTopics, siteConfig, withBase } from '../data/site';
-
-const posts = await getPosts();
-const projects = await getProjects();
-const latestPosts = posts.slice(0, 3);
-const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 2);
-const featuredTopics = researchTopics.slice(0, 3);
+import { awards, education, news, siteConfig } from '../data/site';
 ---
 
 <BaseLayout description={siteConfig.description}>
-  <article class="academic-home" data-pagefind-body itemscope itemtype="http://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Biography" />
-
-    <header class="academic-page-header">
-      <h1><span class="lang-en">Biography</span><span class="lang-zh" lang="zh">个人简介</span></h1>
-    </header>
-
-    <section class="academic-copy home-introduction" itemprop="text">
-      <p>
-        <span class="lang-en">I’m a {siteConfig.role.toLowerCase()} studying {siteConfig.field} at {siteConfig.institution}. My research interests include <strong>{siteConfig.researchSummary}</strong>.</span>
-        <span class="lang-zh" lang="zh">我是在{siteConfig.institutionZh}学习{siteConfig.fieldZh}的{siteConfig.roleZh}，感兴趣的研究方向包括<strong>{siteConfig.researchSummaryZh}</strong>。</span>
+  <article class="homepage" itemscope itemtype="https://schema.org/Person">
+    <section class="content-section biography-section">
+      <h1>Biography</h1>
+      <p class="biography-copy" itemprop="description">
+        {siteConfig.biography}
       </p>
-      <p>
-        <span class="lang-en">This homepage records my learning process, paper reading, experiments, and software projects. The profile is intentionally limited to information that has been confirmed.</span>
-        <span class="lang-zh" lang="zh">这个主页记录我的学习过程、论文阅读、实验与编程项目。个人资料只保留已经确认的信息。</span>
-      </p>
-      <p class="home-links">
-        <a href={withBase('/cv')}><span class="lang-en">Curriculum Vitae</span><span class="lang-zh" lang="zh">个人简历</span></a>
-        <span aria-hidden="true"> · </span>
-        <a href={withBase('/contact')}><span class="lang-en">Contact</span><span class="lang-zh" lang="zh">联系方式</span></a>
-      </p>
+      {siteConfig.cvHref && (
+        <p class="inline-link-row">
+          You can find my CV here: <a href={siteConfig.cvHref}>Ruijian Huang’s Curriculum Vitae</a>.
+        </p>
+      )}
+      {siteConfig.links.length > 0 && (
+        <p class="inline-link-row">
+          {siteConfig.links.map((link, index) => (
+            <>
+              {index > 0 && <span aria-hidden="true"> / </span>}
+              <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+            </>
+          ))}
+        </p>
+      )}
     </section>
 
-    <section class="academic-section" aria-labelledby="home-research-title">
-      <h2 id="home-research-title"><Icon name="book" size={18} /><span class="lang-en">Research interests</span><span class="lang-zh" lang="zh">研究兴趣</span></h2>
-      <ul class="academic-topic-list">
-        {featuredTopics.map((topic) => (
-          <li>
-            <strong><span class="lang-en">{topic.title}</span><span class="lang-zh" lang="zh">{topic.titleZh}</span></strong>
-            <span><span class="lang-en">{topic.description}</span><span class="lang-zh" lang="zh">{topic.descriptionZh}</span></span>
-          </li>
-        ))}
-      </ul>
-      <p class="section-more"><a href={withBase('/research')}><span class="lang-en">Research details →</span><span class="lang-zh" lang="zh">查看研究方向 →</span></a></p>
-    </section>
+    {education.length > 0 && (
+      <section class="content-section" aria-labelledby="education-title">
+        <h2 id="education-title"><Icon name="education" size={25} /> <span>Education</span></h2>
+        <div class="section-rule" aria-hidden="true"></div>
+        <ul class="record-list education-list">
+          {education.map((entry) => (
+            <li>
+              <p class="record-title"><strong>{entry.institution}</strong> <span>({entry.dates})</span></p>
+              <p class="record-detail">{entry.program} — <em>{entry.college}</em></p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
-    <section class="academic-section" aria-labelledby="home-education-title">
-      <h2 id="home-education-title"><Icon name="book" size={18} /><span class="lang-en">Education</span><span class="lang-zh" lang="zh">教育经历</span></h2>
-      <p class="academic-record-placeholder">
-        <strong><span class="lang-en">{cvPlaceholders.education}</span><span class="lang-zh" lang="zh">{cvPlaceholders.educationZh}</span></strong><br />
-        <span class="lang-en">Institution, degree, dates, and confirmed focus will be added here.</span>
-        <span class="lang-zh" lang="zh">将在这里补充学校、学位、时间与经过确认的方向。</span>
-      </p>
-    </section>
+    {news.length > 0 && (
+      <section class="content-section" aria-labelledby="news-title">
+        <h2 id="news-title"><Icon name="news" size={25} /> <span>News</span></h2>
+        <div class="section-rule" aria-hidden="true"></div>
+        <ul class="bullet-list">
+          {news.map((item) => (
+            <li>
+              <strong>[{item.date}]</strong>{' '}
+              {item.href ? <a href={item.href} target="_blank" rel="noreferrer">{item.text}</a> : item.text}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
-    <section class="academic-section" aria-labelledby="home-notes-title">
-      <h2 id="home-notes-title"><Icon name="book" size={18} /><span class="lang-en">Recent notes</span><span class="lang-zh" lang="zh">近期笔记</span></h2>
-      <ol class="academic-record-list">
-        {latestPosts.map((post) => (
-          <li class="academic-record-item">
-            <time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0, 10)}</time>
-            <div>
-              <h3><a href={withBase(`/blog/${slugFor(post)}/`)}><span class="lang-en">{post.data.title}</span><span class="lang-zh" lang="zh">{post.data.titleZh}</span></a></h3>
-              <p><span class="lang-en">{post.data.summary}</span><span class="lang-zh" lang="zh">{post.data.summaryZh}</span></p>
-              <small><span class="lang-en">{post.data.category} · {getReadingTime(post)} min read</span><span class="lang-zh" lang="zh">{post.data.categoryZh} · {getReadingTime(post)} 分钟阅读</span></small>
-            </div>
-          </li>
-        ))}
-      </ol>
-      <p class="section-more"><a href={withBase('/blog')}><span class="lang-en">All notes →</span><span class="lang-zh" lang="zh">全部笔记 →</span></a></p>
-    </section>
-
-    <section class="academic-section" aria-labelledby="home-projects-title">
-      <h2 id="home-projects-title"><Icon name="code" size={18} /><span class="lang-en">Selected projects</span><span class="lang-zh" lang="zh">精选项目</span></h2>
-      <ul class="academic-record-list project-record-list">
-        {featuredProjects.map((project) => (
-          <li class="academic-record-item">
-            <span class="record-marker" aria-hidden="true">↳</span>
-            <div>
-              <h3><a href={withBase(`/projects/${slugFor(project)}/`)}><span class="lang-en">{project.data.title}</span><span class="lang-zh" lang="zh">{project.data.titleZh}</span></a></h3>
-              <p><span class="lang-en">{project.data.summary}</span><span class="lang-zh" lang="zh">{project.data.summaryZh}</span></p>
-              <small><span class="lang-en">Status: {project.data.status}</span><span class="lang-zh" lang="zh">状态：{project.data.statusZh}</span></small>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <p class="section-more"><a href={withBase('/projects')}><span class="lang-en">All projects →</span><span class="lang-zh" lang="zh">全部项目 →</span></a></p>
-    </section>
-
-    <p class="academic-note">
-      <span class="lang-en">Sample records are clearly marked in the archive and should be replaced with verified personal details before publication.</span>
-      <span class="lang-zh" lang="zh">档案中的示例记录会明确标注，正式发布前请替换为经过核实的个人信息。</span>
-    </p>
+    {awards.length > 0 && (
+      <section class="content-section" aria-labelledby="awards-title">
+        <h2 id="awards-title"><Icon name="award" size={25} /> <span>Awards &amp; Honors</span></h2>
+        <div class="section-rule" aria-hidden="true"></div>
+        <ul class="bullet-list">
+          {awards.map((award) => (
+            <li>
+              {award.href ? <a href={award.href} target="_blank" rel="noreferrer"><strong>{award.title}</strong></a> : <strong>{award.title}</strong>}, {award.organization}, {award.year}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
   </article>
 </BaseLayout>
