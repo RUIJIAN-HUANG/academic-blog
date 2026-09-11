@@ -2383,15 +2383,15 @@ html[data-theme='dark'] .theme-dark-icon {
 }
 
 .academic-page-header {
-  padding: 0 0 1.8rem;
+  padding: 0 0 1.25rem;
   border-bottom: 1px solid var(--line);
 }
 
 .academic-page-header h1 {
   margin: 0;
   color: var(--ink);
-  font-size: clamp(1.75rem, 2.8vw, 2.2rem);
-  font-weight: 600;
+  font-size: clamp(1.45rem, 2.2vw, 1.8rem);
+  font-weight: 560;
   letter-spacing: -0.045em;
   line-height: 1.2;
 }
@@ -2551,7 +2551,7 @@ html[data-theme='dark'] .theme-dark-icon {
 }
 
 .academic-content .page-header {
-  padding: 0 0 1.8rem;
+  padding: 0 0 1.25rem;
   border-bottom: 1px solid var(--line);
 }
 
@@ -2562,8 +2562,8 @@ html[data-theme='dark'] .theme-dark-icon {
 .academic-content .page-header h1 {
   max-width: none;
   margin: 0;
-  font-size: clamp(1.75rem, 2.8vw, 2.2rem);
-  font-weight: 600;
+  font-size: clamp(1.45rem, 2.2vw, 1.8rem);
+  font-weight: 560;
   letter-spacing: -0.045em;
   line-height: 1.2;
 }
