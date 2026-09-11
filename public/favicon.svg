@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">RH academic site mark</title>
+  <desc id="desc">A dark ink square with a restrained teal line forming the letters R and H.</desc>
+  <rect width="64" height="64" rx="14" fill="#17282d"/>
+  <path d="M18 45V19h11.5c6.2 0 10.5 3.2 10.5 8.4 0 4.2-2.5 6.9-6.4 8l7.3 9.6h-6.2l-6.5-8.8h-4.8V45H18Zm5.4-13.2h5.1c3.6 0 5.9-1.4 5.9-4.2 0-2.7-2.3-4.1-5.9-4.1h-5.1v8.3Z" fill="#d8ece8"/>
+  <path d="M43 19h4.9v26H43V19Z" fill="#62a7a0"/>
+  <path d="M47.8 19h-4.9l-7.1 13.6h5.3L47.8 19Z" fill="#62a7a0"/>
+</svg>

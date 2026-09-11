@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+import type { SiteLink } from '../data/site';
+
+interface Props {
+  link: SiteLink;
+}
+
+const { link } = Astro.props;
+---
+
+{link.href ? (
+  <a class="contact-link-card" href={link.href} target="_blank" rel="noreferrer">
+    <span class="contact-link-icon">
+      {link.key === 'github' && <Icon name="github" size={17} />}
+      {link.key === 'email' && <Icon name="mail" size={17} />}
+      {link.key === 'scholar' && <Icon name="book" size={17} />}
+      {link.key === 'orcid' && <span style="font-size: 0.65rem; font-weight: 800;">iD</span>}
+    </span>
+    <span class="contact-link-text">
+      <span class="contact-link-label"><span class="lang-en">{link.label}</span><span class="lang-zh" lang="zh">{link.labelZh}</span></span>
+      <span class="contact-link-detail"><span class="lang-en">{link.detail}</span><span class="lang-zh" lang="zh">{link.detailZh}</span></span>
+    </span>
+    <span class="contact-link-arrow"><Icon name="external" size={15} /></span>
+  </a>
+) : (
+  <div class="contact-link-card">
+    <span class="contact-link-icon">
+      {link.key === 'github' && <Icon name="github" size={17} />}
+      {link.key === 'email' && <Icon name="mail" size={17} />}
+      {link.key === 'scholar' && <Icon name="book" size={17} />}
+      {link.key === 'orcid' && <span style="font-size: 0.65rem; font-weight: 800;">iD</span>}
+    </span>
+    <span class="contact-link-text">
+      <span class="contact-link-label"><span class="lang-en">{link.label}</span><span class="lang-zh" lang="zh">{link.labelZh}</span></span>
+      <span class="contact-link-detail"><span class="lang-en">{link.detail}</span><span class="lang-zh" lang="zh">{link.detailZh}</span></span>
+    </span>
+    <span class="contact-link-arrow"><Icon name="external" size={15} /></span>
+  </div>
+)}

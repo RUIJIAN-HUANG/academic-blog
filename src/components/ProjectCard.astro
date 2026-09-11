@@ -1,0 +1,47 @@
+---
+import Icon from './Icon.astro';
+import { withBase } from '../data/site';
+import { slugFor, type Project } from '../lib/content';
+
+interface Props {
+  project: Project;
+  index?: number;
+}
+
+const { project, index = 1 } = Astro.props;
+const { data } = project;
+const href = withBase(`/projects/${slugFor(project)}/`);
+const imageHref = data.image ? (data.image.startsWith('http') ? data.image : withBase(data.image)) : null;
+---
+
+<article class="project-card">
+  <div class="project-card-topline">
+    <span class="project-index">{String(index).padStart(2, '0')}</span>
+    <span class="status-pill"><span class="status-dot" aria-hidden="true"></span><span class="lang-en">{data.status}</span><span class="lang-zh" lang="zh">{data.statusZh}</span></span>
+  </div>
+  {imageHref && <img class="project-image" src={imageHref} alt={data.title} loading="lazy" decoding="async" />}
+  <h3 class="card-title project-title">
+    <a href={href}>
+      <span class="lang-en">{data.title}</span>
+      <span class="lang-zh" lang="zh">{data.titleZh}</span>
+    </a>
+  </h3>
+  <p class="card-summary">
+    <span class="lang-en">{data.summary}</span>
+    <span class="lang-zh" lang="zh">{data.summaryZh}</span>
+  </p>
+  <div class="stack-list">
+    {data.stack.map((item) => <span class="stack-item">{item}</span>)}
+  </div>
+  <div class="card-footer project-footer">
+    <a class="text-link" href={href}>
+      <span class="lang-en">View project</span><span class="lang-zh" lang="zh">查看项目</span>
+      <Icon name="arrow" size={16} />
+    </a>
+    {data.github ? (
+      <a class="subtle-link" href={data.github} target="_blank" rel="noreferrer">GitHub <Icon name="external" size={14} /></a>
+    ) : (
+      <span class="placeholder-note"><span class="lang-en">Repository pending</span><span class="lang-zh" lang="zh">仓库待补充</span></span>
+    )}
+  </div>
+</article>

@@ -1,0 +1,45 @@
+---
+import Icon from './Icon.astro';
+import { withBase } from '../data/site';
+import { formatDate, getReadingTime, slugFor, type BlogPost } from '../lib/content';
+
+interface Props {
+  post: BlogPost;
+  compact?: boolean;
+}
+
+const { post, compact = false } = Astro.props;
+const { data } = post;
+const href = withBase(`/blog/${slugFor(post)}/`);
+---
+
+<article class:list={{ 'post-card': true, compact }} data-post-card data-category={data.category} data-tags={data.tags.join(',')}>
+  <div class="card-meta">
+    <span class="card-category">
+      <span class="lang-en">{data.category}</span>
+      <span class="lang-zh" lang="zh">{data.categoryZh}</span>
+    </span>
+    <span class="card-dot" aria-hidden="true"></span>
+    <time datetime={data.date.toISOString()}>{formatDate(data.date)}</time>
+    {data.sample && <span class="sample-badge"><span class="lang-en">Sample</span><span class="lang-zh" lang="zh">示例</span></span>}
+  </div>
+  <h3 class="card-title">
+    <a href={href}>
+      <span class="lang-en">{data.title}</span>
+      <span class="lang-zh" lang="zh">{data.titleZh}</span>
+    </a>
+  </h3>
+  {!compact && (
+    <p class="card-summary">
+      <span class="lang-en">{data.summary}</span>
+      <span class="lang-zh" lang="zh">{data.summaryZh}</span>
+    </p>
+  )}
+  <div class="card-footer">
+    <div class="tag-list" aria-label="Tags">
+      {data.tags.slice(0, compact ? 2 : 3).map((tag) => <span class="tag">{tag}</span>)}
+    </div>
+    <span class="read-time">{getReadingTime(post)} min <span class="lang-en">read</span><span class="lang-zh" lang="zh">阅读</span></span>
+    <a class="card-arrow" href={href} aria-label={`Read ${data.title}`}><Icon name="arrow" size={17} /></a>
+  </div>
+</article>

@@ -1,0 +1,122 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { siteConfig, withBase } from '../data/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = siteConfig.title,
+  description = siteConfig.description,
+  noindex = false,
+} = Astro.props;
+
+const pageTitle = title === siteConfig.title ? title : `${title} — ${siteConfig.name}`;
+const resolvedSiteUrl = Astro.site?.toString() ?? siteConfig.siteUrl;
+const canonicalUrl = new URL(Astro.url.pathname, resolvedSiteUrl).toString();
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: siteConfig.name,
+  alternateName: siteConfig.nameZh,
+  jobTitle: siteConfig.role,
+  description: siteConfig.description,
+  url: resolvedSiteUrl,
+};
+---
+
+<!doctype html>
+<html lang="en" data-theme="light" data-locale="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="manifest" href={withBase('/site.webmanifest')} />
+    <link rel="alternate" type="application/rss+xml" title={`${siteConfig.name} RSS`} href={withBase('/rss.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <title>{pageTitle}</title>
+    <script is:inline>
+      const theme = (() => {
+        try {
+          const saved = localStorage.getItem('site-theme');
+          if (saved === 'light' || saved === 'dark') return saved;
+        } catch {}
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      })();
+      const locale = (() => {
+        try {
+          return localStorage.getItem('site-locale') === 'zh' ? 'zh' : 'en';
+        } catch {
+          return 'en';
+        }
+      })();
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.dataset.locale = locale;
+      document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
+    </script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <Header />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+    <script is:inline>
+      const setTheme = (nextTheme) => {
+        document.documentElement.dataset.theme = nextTheme;
+        try { localStorage.setItem('site-theme', nextTheme); } catch {}
+        document.querySelector('[data-theme-toggle]')?.setAttribute('aria-label', nextTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      };
+
+      const setLocale = (nextLocale) => {
+        document.documentElement.dataset.locale = nextLocale;
+        document.documentElement.lang = nextLocale === 'zh' ? 'zh-CN' : 'en';
+        try { localStorage.setItem('site-locale', nextLocale); } catch {}
+        document.querySelector('[data-locale-toggle]')?.setAttribute('aria-label', nextLocale === 'zh' ? 'Switch to English' : 'Switch to Chinese');
+      };
+
+      document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+        setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+      });
+
+      document.querySelector('[data-locale-toggle]')?.addEventListener('click', () => {
+        setLocale(document.documentElement.dataset.locale === 'zh' ? 'en' : 'zh');
+      });
+
+      const menuButton = document.querySelector('[data-menu-toggle]');
+      const navigation = document.querySelector('#primary-nav');
+      menuButton?.addEventListener('click', () => {
+        const isOpen = navigation?.classList.toggle('is-open') ?? false;
+        menuButton.setAttribute('aria-expanded', String(isOpen));
+        menuButton.querySelector('.sr-only').textContent = isOpen ? 'Close navigation' : 'Open navigation';
+      });
+
+      navigation?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+        navigation.classList.remove('is-open');
+        menuButton?.setAttribute('aria-expanded', 'false');
+      }));
+    </script>
+    <script>
+      if (document.querySelector('pre.mermaid')) {
+        import('../scripts/mermaid.ts');
+      }
+    </script>
+  </body>
+</html>

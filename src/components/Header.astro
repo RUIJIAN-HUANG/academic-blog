@@ -1,0 +1,55 @@
+---
+import Icon from './Icon.astro';
+import { siteConfig, withBase } from '../data/site';
+
+const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const navItems = [
+  { path: '/', label: 'Home', labelZh: '首页' },
+  { path: '/about', label: 'About', labelZh: '关于我' },
+  { path: '/research', label: 'Research', labelZh: '研究兴趣' },
+  { path: '/blog', label: 'Blog', labelZh: '博客' },
+  { path: '/projects', label: 'Projects', labelZh: '项目' },
+  { path: '/papers', label: 'Papers', labelZh: '论文与阅读' },
+  { path: '/cv', label: 'CV', labelZh: '简历' },
+  { path: '/contact', label: 'Contact', labelZh: '联系方式' },
+];
+
+const isActive = (path: string) => {
+  if (path === '/') return currentPath === '/';
+  return currentPath === path || currentPath.startsWith(`${path}/`);
+};
+---
+
+<header class="site-header" data-pagefind-ignore>
+  <div class="container-shell header-inner">
+    <a class="brand" href={withBase('/')} aria-label={`${siteConfig.name} — home`}>
+      <span class="brand-mark" aria-hidden="true">RH</span>
+      <span class="brand-name">{siteConfig.name}</span>
+    </a>
+
+    <button class="mobile-menu-button" type="button" data-menu-toggle aria-expanded="false" aria-controls="primary-nav">
+      <span class="sr-only">Open navigation</span>
+      <Icon name="menu" size={20} />
+    </button>
+
+    <nav id="primary-nav" class="site-nav" aria-label="Primary navigation">
+      {navItems.map((item) => (
+        <a class:list={{ 'nav-link': true, active: isActive(item.path) }} href={withBase(item.path)} aria-current={isActive(item.path) ? 'page' : undefined}>
+          <span class="lang-en">{item.label}</span>
+          <span class="lang-zh" lang="zh">{item.labelZh}</span>
+        </a>
+      ))}
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-button" type="button" data-locale-toggle aria-label="Switch to Chinese">
+        <span class="locale-en">中</span>
+        <span class="locale-zh" lang="zh">EN</span>
+      </button>
+      <button class="icon-button" type="button" data-theme-toggle aria-label="Switch to dark mode">
+        <span class="theme-light-icon"><Icon name="moon" size={17} /></span>
+        <span class="theme-dark-icon"><Icon name="sun" size={17} /></span>
+      </button>
+    </div>
+  </div>
+</header>

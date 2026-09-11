@@ -1,0 +1,90 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { getPapers, slugFor, type Paper } from '../../lib/content';
+import { withBase } from '../../data/site';
+
+export async function getStaticPaths() {
+  const papers = await getPapers();
+  return papers.map((paper) => ({
+    params: { slug: slugFor(paper) },
+    props: { paper },
+  }));
+}
+
+const { paper } = Astro.props as { paper: Paper };
+const { Content } = await render(paper);
+---
+
+<BaseLayout title={paper.data.title} description={paper.data.abstract}>
+  <article class="paper-page" data-pagefind-body>
+    <section class="page-header">
+      <div class="container-shell">
+        <a class="back-link" href={withBase('/papers')}><Icon name="arrow" size={15} /><span class="lang-en">All reading</span><span class="lang-zh" lang="zh">全部阅读</span></a>
+        <div class="detail-header">
+          <div class="card-meta" style="margin-top: 1.25rem;">
+            <span>{paper.data.type}</span><span class="card-dot" aria-hidden="true"></span><span>{paper.data.year}</span><span class="card-dot" aria-hidden="true"></span><span>{paper.data.venue}</span>
+            {paper.data.sample && <span class="sample-badge"><span class="lang-en">Starter record</span><span class="lang-zh" lang="zh">示例记录</span></span>}
+          </div>
+          <h1><span class="lang-en">{paper.data.title}</span><span class="lang-zh" lang="zh">{paper.data.titleZh}</span></h1>
+          <p class="paper-author-list">{paper.data.authors.join(', ')}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section tight">
+      <div class="container-shell paper-detail-layout">
+        <div class="paper-detail-main">
+          <h2><span class="lang-en">Abstract</span><span class="lang-zh" lang="zh">摘要</span></h2>
+          <p><span class="lang-en">{paper.data.abstract}</span><span class="lang-zh" lang="zh">{paper.data.abstractZh}</span></p>
+          <h2><span class="lang-en">Reading note</span><span class="lang-zh" lang="zh">阅读笔记</span></h2>
+          <div class="prose"><Content /></div>
+          <h2><span class="lang-en">BibTeX</span><span class="lang-zh" lang="zh">BibTeX 引用</span></h2>
+          <div class="citation-block">
+            <pre id="bibtex-content"><code>{paper.data.bibtex}</code></pre>
+            <button class="copy-button" type="button" data-copy-bibtex data-copy-target="bibtex-content" aria-label="Copy BibTeX citation" title="Copy BibTeX citation"><Icon name="copy" size={16} /></button>
+          </div>
+        </div>
+
+        <aside class="paper-detail-side">
+          <dl>
+            <dt><span class="lang-en">Year</span><span class="lang-zh" lang="zh">年份</span></dt>
+            <dd>{paper.data.year}</dd>
+            <dt><span class="lang-en">Venue</span><span class="lang-zh" lang="zh">发表 venue</span></dt>
+            <dd>{paper.data.venue}</dd>
+            <dt><span class="lang-en">Keywords</span><span class="lang-zh" lang="zh">关键词</span></dt>
+            <dd><div class="tag-list">{paper.data.keywords.map((keyword) => <span class="tag">{keyword}</span>)}</div></dd>
+          </dl>
+          <div class="paper-links" style="margin-top: 1.25rem;">
+            {paper.data.arxiv ? <a class="button-link primary" href={paper.data.arxiv} target="_blank" rel="noreferrer">arXiv <Icon name="external" size={14} /></a> : <span class="placeholder-note">arXiv link pending</span>}
+            {paper.data.pdf && <a class="button-link" href={paper.data.pdf} target="_blank" rel="noreferrer">PDF <Icon name="external" size={14} /></a>}
+          </div>
+          {paper.data.doi && <a class="subtle-link" style="margin-top: 0.8rem;" href={paper.data.doi} target="_blank" rel="noreferrer">DOI <Icon name="external" size={13} /></a>}
+        </aside>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<script>
+  const copyButton = document.querySelector<HTMLButtonElement>('[data-copy-bibtex]');
+  copyButton?.addEventListener('click', async () => {
+    const targetId = copyButton.dataset.copyTarget;
+    const target = targetId ? document.getElementById(targetId) : null;
+    const text = target?.textContent?.trim();
+    if (!text) return;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      copyButton.innerHTML = '<span aria-hidden="true">✓</span>';
+      copyButton.setAttribute('aria-label', 'BibTeX copied');
+      window.setTimeout(() => {
+        copyButton.innerHTML = '<span aria-hidden="true">⧉</span>';
+        copyButton.setAttribute('aria-label', 'Copy BibTeX citation');
+      }, 1500);
+    } catch {
+      copyButton.setAttribute('aria-label', 'Copy unavailable; select the citation manually');
+    }
+  });
+</script>

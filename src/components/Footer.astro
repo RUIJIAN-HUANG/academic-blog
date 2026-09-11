@@ -1,0 +1,33 @@
+---
+import Icon from './Icon.astro';
+import { siteConfig, withBase } from '../data/site';
+---
+
+<footer class="site-footer" data-pagefind-ignore>
+  <div class="container-shell footer-grid">
+    <div>
+      <p class="footer-name">{siteConfig.name} <span class="footer-name-zh" lang="zh">/ {siteConfig.nameZh}</span></p>
+      <p class="footer-note">
+        <span class="lang-en">A quiet archive of study, research notes, and work in progress.</span>
+        <span class="lang-zh" lang="zh">记录学习、研究笔记与进行中的工作的安静档案。</span>
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <a href={withBase('/rss.xml')} class="footer-link">
+        <span class="lang-en">RSS</span><span class="lang-zh" lang="zh">RSS 订阅</span>
+      </a>
+      <a href={withBase('/contact')} class="footer-link">
+        <span class="lang-en">Contact</span><span class="lang-zh" lang="zh">联系</span>
+        <Icon name="arrow" size={15} />
+      </a>
+    </div>
+
+    <p class="footer-meta">
+      <span>© {new Date().getFullYear()} {siteConfig.name}</span>
+      <span class="footer-separator">·</span>
+      <span class="lang-en">Built for careful reading.</span>
+      <span class="lang-zh" lang="zh">为认真阅读而建。</span>
+    </p>
+  </div>
+</footer>

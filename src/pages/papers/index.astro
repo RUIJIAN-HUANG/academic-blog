@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PaperRow from '../../components/PaperRow.astro';
+import { getPapers } from '../../lib/content';
+
+const papers = await getPapers();
+const types = [...new Set(papers.map((paper) => paper.data.type))];
+---
+
+<BaseLayout title="Papers & reading" description="A structured reading list for papers, preprints, and research notes.">
+  <section class="page-header">
+    <div class="container-shell">
+      <p class="eyebrow">Reading / 05</p>
+      <h1><span class="lang-en">Papers & reading</span><span class="lang-zh" lang="zh">论文与阅读</span></h1>
+      <p class="page-intro">
+        <span class="lang-en">A traceable reading list for papers, preprints, and future reading notes. Starter records are clearly marked and can be replaced without changing the page structure.</span>
+        <span class="lang-zh" lang="zh">一个可追溯的论文、预印本与阅读笔记列表。示例记录会明确标记，可以在不改变页面结构的情况下替换。</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="page-section tight" data-pagefind-body>
+    <div class="container-shell">
+      <div class="filter-row" style="margin-bottom: 1.8rem;">
+        <span class="filter-label"><span class="lang-en">Show</span><span class="lang-zh" lang="zh">显示</span></span>
+        <label class="sr-only" for="paper-type-filter">Filter papers by type</label>
+        <select id="paper-type-filter" class="filter-select" data-paper-filter>
+          <option value="">All records / 全部记录</option>
+          {types.map((type) => <option value={type}>{type}</option>)}
+        </select>
+      </div>
+      <div class="paper-list">
+        {papers.map((paper) => <PaperRow paper={paper} />)}
+      </div>
+      <div class="filter-empty" data-paper-empty>
+        <span class="lang-en">No reading records match this filter.</span><span class="lang-zh" lang="zh">没有符合筛选条件的阅读记录。</span>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const paperFilter = document.querySelector<HTMLSelectElement>('[data-paper-filter]');
+  const paperRows = [...document.querySelectorAll<HTMLElement>('[data-paper-row]')];
+  const paperEmpty = document.querySelector('[data-paper-empty]');
+
+  paperFilter?.addEventListener('change', () => {
+    const selected = paperFilter.value;
+    let visible = 0;
+    paperRows.forEach((row) => {
+      const show = !selected || row.dataset.paperType === selected;
+      row.hidden = !show;
+      if (show) visible += 1;
+    });
+    paperEmpty?.classList.toggle('is-visible', visible === 0);
+  });
+</script>

@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactLink from '../components/ContactLink.astro';
+import Icon from '../components/Icon.astro';
+import { siteConfig, withBase } from '../data/site';
+---
+
+<BaseLayout title="Contact" description="Academic and professional contact links for Ruijian Huang.">
+  <section class="page-header">
+    <div class="container-shell">
+      <p class="eyebrow">Contact / 07</p>
+      <h1><span class="lang-en">Contact</span><span class="lang-zh" lang="zh">联系方式</span></h1>
+      <p class="page-intro">
+        <span class="lang-en">Use the links below for academic profiles, code, and future correspondence. Unpublished contact details are shown as placeholders rather than guessed.</span>
+        <span class="lang-zh" lang="zh">可通过下方链接访问学术主页、代码与后续联系方式。未提供的联系信息会显示为占位符，不会被猜测或编造。</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="page-section tight">
+    <div class="container-shell contact-grid">
+      <div>
+        <p class="eyebrow">Academic links</p>
+        <div class="contact-links">
+          {siteConfig.links.map((link) => <ContactLink link={link} />)}
+        </div>
+      </div>
+
+      <aside class="callout">
+        <p><span class="lang-en">The preferred contact channel and response expectations can be added here once confirmed.</span><span class="lang-zh" lang="zh">确认后，可以在这里补充首选联系渠道与回复说明。</span></p>
+        <p style="margin-top: 0.9rem;"><a class="text-link" href={withBase('/rss.xml')}><span class="lang-en">Subscribe via RSS</span><span class="lang-zh" lang="zh">通过 RSS 订阅</span><Icon name="arrow" size={16} /></a></p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

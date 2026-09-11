@@ -1,0 +1,39 @@
+---
+import Icon from './Icon.astro';
+import { withBase } from '../data/site';
+import { slugFor, type Paper } from '../lib/content';
+
+interface Props {
+  paper: Paper;
+}
+
+const { paper } = Astro.props;
+const { data } = paper;
+const href = withBase(`/papers/${slugFor(paper)}/`);
+---
+
+<article class="paper-row" data-paper-row data-paper-type={data.type}>
+  <div class="paper-year">{data.year}</div>
+  <div class="paper-main">
+    <div class="card-meta paper-meta">
+      <span>{data.type}</span><span class="card-dot" aria-hidden="true"></span><span>{data.venue}</span>
+      {data.sample && <span class="sample-badge"><span class="lang-en">Starter record</span><span class="lang-zh" lang="zh">示例记录</span></span>}
+    </div>
+    <h3 class="paper-title">
+      <a href={href}>
+        <span class="lang-en">{data.title}</span>
+        <span class="lang-zh" lang="zh">{data.titleZh}</span>
+      </a>
+    </h3>
+    <p class="paper-authors">{data.authors.join(', ')}</p>
+    <p class="paper-abstract">
+      <span class="lang-en">{data.abstract}</span>
+      <span class="lang-zh" lang="zh">{data.abstractZh}</span>
+    </p>
+    <div class="paper-links">
+      <a class="text-link" href={href}><span class="lang-en">Reading note</span><span class="lang-zh" lang="zh">阅读笔记</span><Icon name="arrow" size={15} /></a>
+      {data.arxiv && <a class="subtle-link" href={data.arxiv} target="_blank" rel="noreferrer">arXiv <Icon name="external" size={13} /></a>}
+      {data.pdf && <a class="subtle-link" href={data.pdf} target="_blank" rel="noreferrer">PDF <Icon name="external" size={13} /></a>}
+    </div>
+  </div>
+</article>

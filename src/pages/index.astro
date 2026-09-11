@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import PostCard from '../components/PostCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getPosts, getProjects } from '../lib/content';
+import { researchTopics, siteConfig, withBase } from '../data/site';
+
+const posts = await getPosts();
+const projects = await getProjects();
+const latestPosts = posts.slice(0, 3);
+const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 2);
+const featuredTopics = researchTopics.slice(0, 2);
+---
+
+<BaseLayout description={siteConfig.description}>
+  <section class="hero-section">
+    <div class="container-shell hero-grid">
+      <div>
+        <p class="hero-kicker">Academic site / 01</p>
+        <h1 class="hero-title">
+          {siteConfig.name}
+          <span class="name-zh" lang="zh">{siteConfig.nameZh}</span>
+        </h1>
+        <p class="hero-intro">
+          <span class="lang-en">{siteConfig.intro}</span>
+          <span class="lang-zh" lang="zh">{siteConfig.introZh}</span>
+        </p>
+        <div class="hero-actions">
+          <a class="button-link primary" href={withBase('/blog')}>
+            <Icon name="book" size={16} />
+            <span class="lang-en">Read the notes</span><span class="lang-zh" lang="zh">阅读笔记</span>
+          </a>
+          <a class="button-link" href={withBase('/research')}>
+            <span class="lang-en">Research interests</span><span class="lang-zh" lang="zh">研究兴趣</span>
+            <Icon name="arrow" size={16} />
+          </a>
+        </div>
+      </div>
+
+      <aside class="identity-card" aria-label="Profile summary">
+        <p class="identity-label"><span class="lang-en">At a glance</span><span class="lang-zh" lang="zh">个人概览</span></p>
+        <dl class="identity-list">
+          <div>
+            <dt><span class="lang-en">Role</span><span class="lang-zh" lang="zh">身份</span></dt>
+            <dd><span class="lang-en">{siteConfig.role}</span><span class="lang-zh" lang="zh">{siteConfig.roleZh}</span></dd>
+          </div>
+          <div>
+            <dt><span class="lang-en">Field</span><span class="lang-zh" lang="zh">专业</span></dt>
+            <dd><span class="lang-en">{siteConfig.field}</span><span class="lang-zh" lang="zh">{siteConfig.fieldZh}</span></dd>
+          </div>
+          <div>
+            <dt><span class="lang-en">Focus</span><span class="lang-zh" lang="zh">方向</span></dt>
+            <dd><span class="lang-en">{siteConfig.interest}</span><span class="lang-zh" lang="zh">{siteConfig.interestZh}</span></dd>
+          </div>
+          <div>
+            <dt><span class="lang-en">Location</span><span class="lang-zh" lang="zh">所在地</span></dt>
+            <dd><span class="lang-en">{siteConfig.location}</span><span class="lang-zh" lang="zh">{siteConfig.locationZh}</span></dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <div class="container-shell home-rule"></div>
+
+  <section class="page-section home-panel" aria-labelledby="home-research-title">
+    <div class="container-shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Research / 02</p>
+          <h2 id="home-research-title"><span class="lang-en">What I am exploring</span><span class="lang-zh" lang="zh">正在探索什么</span></h2>
+        </div>
+        <a class="section-link" href={withBase('/research')}><span class="lang-en">All research interests</span><span class="lang-zh" lang="zh">全部研究兴趣</span><Icon name="arrow" size={16} /></a>
+      </div>
+      <div class="topic-grid">
+        {featuredTopics.map((topic) => (
+          <article class="topic-card" data-accent={topic.accent}>
+            <p class="topic-number">{topic.number}</p>
+            <h3 class="topic-title"><span class="lang-en">{topic.title}</span><span class="lang-zh" lang="zh">{topic.titleZh}</span></h3>
+            <p class="topic-description"><span class="lang-en">{topic.description}</span><span class="lang-zh" lang="zh">{topic.descriptionZh}</span></p>
+            <div class="topic-links">
+              {topic.tags.map((tag) => <a class="topic-link" href={withBase(`/blog/?tag=${encodeURIComponent(tag)}`)}>#{tag}</a>)}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section home-panel" aria-labelledby="home-posts-title">
+    <div class="container-shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Notes / 03</p>
+          <h2 id="home-posts-title"><span class="lang-en">Recent writing</span><span class="lang-zh" lang="zh">最近文章</span></h2>
+        </div>
+        <a class="section-link" href={withBase('/blog')}><span class="lang-en">Browse the archive</span><span class="lang-zh" lang="zh">浏览全部文章</span><Icon name="arrow" size={16} /></a>
+      </div>
+      <div class="post-grid">
+        {latestPosts.map((post) => <PostCard post={post} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section home-panel" aria-labelledby="home-projects-title">
+    <div class="container-shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Projects / 04</p>
+          <h2 id="home-projects-title"><span class="lang-en">Selected workspaces</span><span class="lang-zh" lang="zh">精选工作空间</span></h2>
+        </div>
+        <a class="section-link" href={withBase('/projects')}><span class="lang-en">All projects</span><span class="lang-zh" lang="zh">全部项目</span><Icon name="arrow" size={16} /></a>
+      </div>
+      <div class="project-grid">
+        {featuredProjects.map((project, index) => <ProjectCard project={project} index={index + 1} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section home-panel" aria-labelledby="home-contact-title">
+    <div class="container-shell">
+      <div class="callout">
+        <p id="home-contact-title">
+          <span class="lang-en">This site currently contains starter content. Replace the marked records with verified personal details, project evidence, and publications as they become available.</span>
+          <span class="lang-zh" lang="zh">当前网站包含示例内容。请在信息确认后，替换标记的个人资料、项目证据与成果记录。</span>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
