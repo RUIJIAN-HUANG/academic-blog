@@ -1,6 +1,7 @@
 ---
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import AcademicSidebar from '../components/AcademicSidebar.astro';
 import { siteConfig, withBase } from '../data/site';
 import '../styles/global.css';
 
@@ -75,7 +76,12 @@ const structuredData = {
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Header />
     <main id="main-content">
-      <slot />
+      <div class="container-shell academic-layout">
+        <AcademicSidebar />
+        <div class="academic-content">
+          <slot />
+        </div>
+      </div>
     </main>
     <Footer />
     <script is:inline>

@@ -71,7 +71,7 @@ export const researchTopics = [
       'How an agent connects perception, reasoning, and action when it has to operate in a physical environment.',
     descriptionZh: '关注智能体如何在物理环境中连接感知、推理与行动。',
     tags: ['embodied-intelligence'],
-    accent: 'teal',
+    accent: 'slate',
   },
   {
     number: '02',
