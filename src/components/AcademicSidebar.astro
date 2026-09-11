@@ -23,9 +23,15 @@ const iconFor: Record<string, 'github' | 'mail' | 'scholar' | 'orcid' | 'wechat'
   <div class="profile-links">
     <p class="profile-link-row"><Icon name="location" size={18} /><span>{siteConfig.location}</span></p>
     {siteConfig.links.map((link) => (
-      <a class="profile-link-row profile-social-link" href={link.href} target="_blank" rel="noreferrer">
-        <Icon name={iconFor[link.key]} size={18} /><span>{link.label}</span>
-      </a>
+      link.href ? (
+        <a class="profile-link-row profile-social-link" href={link.href} target="_blank" rel="noreferrer">
+          <Icon name={iconFor[link.key]} size={18} /><span>{link.label}</span>
+        </a>
+      ) : (
+        <p class="profile-link-row">
+          <Icon name={iconFor[link.key]} size={18} /><span>{link.label}</span>
+        </p>
+      )
     ))}
   </div>
 </aside>

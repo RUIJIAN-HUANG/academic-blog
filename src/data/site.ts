@@ -3,7 +3,7 @@ export type SocialKey = 'github' | 'email' | 'scholar' | 'orcid' | 'wechat' | 'w
 export interface SocialLink {
   key: SocialKey;
   label: string;
-  href: string;
+  href?: string;
 }
 
 export interface EducationEntry {
@@ -55,7 +55,13 @@ export const siteConfig = {
     'I’m a second-year undergraduate student from the College of Computer Science and Software Engineering, Shenzhen University. My research interests include machine learning, edge AI systems, tiny machine learning, and embodied intelligence.',
   profileImage: '/images/profile.jpg',
   cvHref: null as string | null,
-  links: [] as SocialLink[],
+  links: [
+    { key: 'email', label: '2025150156@mails.szu.edu.cn' },
+    { key: 'scholar', label: 'Google Scholar' },
+    { key: 'github', label: 'GitHub', href: 'https://github.com/RUIJIAN-HUANG/' },
+    { key: 'wechat', label: 'WeChat' },
+    { key: 'whatsapp', label: 'WhatsApp' },
+  ] as SocialLink[],
 } as const;
 
 export const researchInterests = [
