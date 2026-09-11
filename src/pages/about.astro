@@ -19,8 +19,8 @@ import { siteConfig, cvPlaceholders, withBase } from '../data/site';
     <div class="container-shell about-grid">
       <div class="about-copy">
         <p>
-          <span class="lang-en">I am {siteConfig.name}, a {siteConfig.role.toLowerCase()} studying {siteConfig.field}. My current interest is {siteConfig.interest.toLowerCase()}.</span>
-          <span class="lang-zh" lang="zh">我是{siteConfig.nameZh}，一名学习{siteConfig.fieldZh}的{siteConfig.roleZh}。当前关注方向是{siteConfig.interestZh}。</span>
+          <span class="lang-en">I am {siteConfig.name}, a {siteConfig.role.toLowerCase()} studying {siteConfig.field} at {siteConfig.institution}. My research interests include {siteConfig.researchSummary}.</span>
+          <span class="lang-zh" lang="zh">我是{siteConfig.nameZh}，一名在{siteConfig.institutionZh}学习{siteConfig.fieldZh}的{siteConfig.roleZh}。感兴趣的研究方向包括{siteConfig.researchSummaryZh}。</span>
         </p>
         <p>
           <span class="lang-en">This page is intentionally modest: it is a place to add verified education, research experience, and longer-term goals without filling the gaps with assumptions.</span>
@@ -46,8 +46,8 @@ import { siteConfig, cvPlaceholders, withBase } from '../data/site';
           <dd><span class="lang-en">{siteConfig.field}</span><span class="lang-zh" lang="zh">{siteConfig.fieldZh}</span></dd>
         </div>
         <div>
-          <dt><span class="lang-en">Primary interest</span><span class="lang-zh" lang="zh">主要兴趣</span></dt>
-          <dd><span class="lang-en">{siteConfig.interest}</span><span class="lang-zh" lang="zh">{siteConfig.interestZh}</span></dd>
+          <dt><span class="lang-en">Research interests</span><span class="lang-zh" lang="zh">研究兴趣</span></dt>
+          <dd><span class="lang-en">{siteConfig.researchSummary}</span><span class="lang-zh" lang="zh">{siteConfig.researchSummaryZh}</span></dd>
         </div>
       </dl>
     </div>

@@ -12,20 +12,23 @@ export const siteConfig = {
   nameZh: '黄睿健',
   title: 'Ruijian Huang — Academic Notes',
   description:
-    'Academic homepage and technical notes by Ruijian Huang, a Computer Science and Technology student exploring embodied intelligence and robot learning.',
-  descriptionZh: '黄睿健的学术主页与技术笔记，记录计算机科学与技术学习、具身智能与机器人学习探索。',
+    'Academic homepage and technical notes by Ruijian Huang, a second-year Computer Science and Technology student interested in machine learning and embodied intelligence.',
+  descriptionZh: '黄睿健的学术主页与技术笔记，记录计算机科学与技术专业大二学生对机器学习与具身智能的探索。',
   siteUrl: 'https://your-github-username.github.io/',
-  role: 'Student',
-  roleZh: '学生',
+  role: 'Second-year undergraduate student',
+  roleZh: '大二学生',
   institution: 'Shenzhen University',
   institutionZh: '深圳大学',
   field: 'Computer Science and Technology',
   fieldZh: '计算机科学与技术',
   interest: 'Embodied Intelligence & Robot Learning',
   interestZh: '具身智能与机器人学习',
+  researchSummary:
+    'machine learning, edge AI systems, tiny machine learning, and embodied intelligence',
+  researchSummaryZh: '机器学习、边缘 AI 系统、微型机器学习与具身智能',
   intro:
-    'A student in Computer Science and Technology exploring how intelligent systems can perceive, learn, and act in the physical world.',
-  introZh: '计算机科学与技术专业学生，正在探索智能系统如何在物理世界中感知、学习与行动。',
+    'A second-year undergraduate student in Computer Science and Technology interested in machine learning, edge AI systems, tiny machine learning, and embodied intelligence.',
+  introZh: '计算机科学与技术专业大二学生，感兴趣的方向包括机器学习、边缘 AI 系统、微型机器学习与具身智能。',
   links: [
     {
       key: 'github',
