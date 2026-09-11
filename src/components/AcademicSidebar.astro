@@ -24,7 +24,9 @@ const availableLinks = siteConfig.links.filter((link) => link.href);
 
 <aside class="academic-sidebar" aria-label="Profile and site navigation">
   <div class="profile-block">
-    <div class="profile-avatar" aria-hidden="true">RH</div>
+    <div class="profile-avatar">
+      <img src={withBase('/images/profile.jpg')} alt={`${siteConfig.name}（${siteConfig.nameZh}）`} loading="eager" decoding="async" />
+    </div>
     <h2 class="profile-name">
       {siteConfig.name}
       <span class="profile-name-zh" lang="zh">（{siteConfig.nameZh}）</span>
