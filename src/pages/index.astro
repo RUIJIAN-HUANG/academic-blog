@@ -16,16 +16,6 @@ import { awards, education, news, siteConfig } from '../data/site';
           You can find my CV here: <a href={siteConfig.cvHref}>Ruijian Huang’s Curriculum Vitae</a>.
         </p>
       )}
-      {siteConfig.links.length > 0 && (
-        <p class="inline-link-row">
-          {siteConfig.links.map((link, index) => (
-            <>
-              {index > 0 && <span aria-hidden="true"> / </span>}
-              <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
-            </>
-          ))}
-        </p>
-      )}
     </section>
 
     {education.length > 0 && (
