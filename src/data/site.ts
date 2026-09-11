@@ -17,6 +17,8 @@ export const siteConfig = {
   siteUrl: 'https://your-github-username.github.io/',
   role: 'Student',
   roleZh: '学生',
+  institution: 'Shenzhen University',
+  institutionZh: '深圳大学',
   field: 'Computer Science and Technology',
   fieldZh: '计算机科学与技术',
   interest: 'Embodied Intelligence & Robot Learning',
