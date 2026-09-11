@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
-import { awards, education, news, siteConfig } from '../data/site';
+import { education, news, siteConfig } from '../data/site';
 ---
 
 <BaseLayout description={siteConfig.description}>
@@ -33,6 +33,16 @@ import { awards, education, news, siteConfig } from '../data/site';
       </section>
     )}
 
+    <section class="content-section" aria-labelledby="papers-title">
+      <h2 id="papers-title"><Icon name="news" size={25} /> <span>Papers</span></h2>
+      <div class="section-rule" aria-hidden="true"></div>
+    </section>
+
+    <section class="content-section" aria-labelledby="awards-title">
+      <h2 id="awards-title"><Icon name="award" size={25} /> <span>Awards &amp; Honors</span></h2>
+      <div class="section-rule" aria-hidden="true"></div>
+    </section>
+
     {news.length > 0 && (
       <section class="content-section" aria-labelledby="news-title">
         <h2 id="news-title"><Icon name="news" size={25} /> <span>News</span></h2>
@@ -48,18 +58,5 @@ import { awards, education, news, siteConfig } from '../data/site';
       </section>
     )}
 
-    {awards.length > 0 && (
-      <section class="content-section" aria-labelledby="awards-title">
-        <h2 id="awards-title"><Icon name="award" size={25} /> <span>Awards &amp; Honors</span></h2>
-        <div class="section-rule" aria-hidden="true"></div>
-        <ul class="bullet-list">
-          {awards.map((award) => (
-            <li>
-              {award.href ? <a href={award.href} target="_blank" rel="noreferrer"><strong>{award.title}</strong></a> : <strong>{award.title}</strong>}, {award.organization}, {award.year}
-            </li>
-          ))}
-        </ul>
-      </section>
-    )}
   </article>
 </BaseLayout>
