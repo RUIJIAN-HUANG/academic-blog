@@ -2259,10 +2259,11 @@ html[data-theme='dark'] .theme-dark-icon {
 
 .academic-layout {
   display: grid;
-  width: min(100% - 3rem, 76rem);
-  grid-template-columns: minmax(12rem, 15rem) minmax(0, 1fr);
-  gap: clamp(3rem, 8vw, 7rem);
+  width: min(calc(100% - 2.5rem), 70rem);
+  grid-template-columns: minmax(10.5rem, 12rem) minmax(0, 1fr);
+  gap: clamp(1.75rem, 3.5vw, 3rem);
   align-items: start;
+  margin-inline: auto;
   padding-block: 3.8rem 4.5rem;
 }
 
@@ -2270,6 +2271,7 @@ html[data-theme='dark'] .theme-dark-icon {
   position: sticky;
   top: 2rem;
   align-self: start;
+  min-width: 0;
   color: var(--muted);
 }
 
@@ -2424,8 +2426,8 @@ html[data-theme='dark'] .theme-dark-icon {
 .academic-page-header h1 {
   margin: 0;
   color: var(--ink);
-  font-size: clamp(2rem, 3.6vw, 2.75rem);
-  font-weight: 650;
+  font-size: clamp(1.75rem, 2.8vw, 2.2rem);
+  font-weight: 600;
   letter-spacing: -0.045em;
   line-height: 1.2;
 }
@@ -2471,7 +2473,7 @@ html[data-theme='dark'] .theme-dark-icon {
 }
 
 .academic-section {
-  margin-top: 2.8rem;
+  margin-top: 2.35rem;
 }
 
 .academic-section h2 {
@@ -2596,8 +2598,8 @@ html[data-theme='dark'] .theme-dark-icon {
 .academic-content .page-header h1 {
   max-width: none;
   margin: 0;
-  font-size: clamp(2rem, 3.6vw, 2.75rem);
-  font-weight: 650;
+  font-size: clamp(1.75rem, 2.8vw, 2.2rem);
+  font-weight: 600;
   letter-spacing: -0.045em;
   line-height: 1.2;
 }
